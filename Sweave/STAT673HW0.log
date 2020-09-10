@@ -1,0 +1,106 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.8.27)  9 SEP 2020 18:50
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**STAT673HW0.tex
+(./STAT673HW0.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-08-07>
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/artic
+le.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size1
+0.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count168
+\c@section=\count169
+\c@subsection=\count170
+\c@subsubsection=\count171
+\c@paragraph=\count172
+\c@subparagraph=\count173
+\c@figure=\count174
+\c@table=\count175
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+) (c:/Program Files/R/R-3.6.2/share/texmf/tex/latex/Sweave.sty
+Package: Sweave 
+
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthe
+n.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/g
+raphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/k
+eyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/g
+raphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/t
+rig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-c
+fg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-d
+ef/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen135
+\Gin@req@width=\dimen136
+)
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/f
+ancyvrb.sty
+Package: fancyvrb 2020/05/03 v3.6 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count176
+\FV@InFile=\read2
+\FV@TabBox=\box45
+\c@FancyVerbLine=\count177
+\FV@StepNumber=\count178
+\FV@OutFile=\write3
+)
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textc
+omp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+(c:/Users/Kristine Dinh/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fonte
+nc.sty
+Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
+)
+
+! LaTeX Error: File `ae.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.30 \ifthenelse
+                {\boolean{Sweave@inconsolata}}{%^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
+Here is how much of TeX's memory you used:
+ 1280 strings out of 482841
+ 16993 string characters out of 5954362
+ 249331 words of memory out of 5000000
+ 16692 multiletter control sequences out of 15000+600000
+ 535851 words of font info for 30 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 44i,0n,37p,215b,38s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
