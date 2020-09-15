@@ -4,7 +4,7 @@ rnorm(100)
 
 #### AR(1) ####
 
-y.50 <- arima.sim(model = list(ar = 0.5), n = 1000)
+y.50 <- arima.sim(model = list(ar = 0.5), n = 100)
 
 plot(y.50)
 

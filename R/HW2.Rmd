@@ -1,0 +1,46 @@
+---
+title: "Homework 2 R Problem"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.height = 4, fig.width = 6)
+```
+
+
+```{r}
+
+set.seed(2)
+
+# a) AR(1) series with phi = 0.5 
+y.50 <-  arima.sim(model = list(ar = 0.5), n = 100)
+
+```
+
+### ACF
+
+```{r}
+
+# plot ACF of AR(1) series with phi = 0.5 
+acf(y.50)
+
+y_acf_values <- acf(y.50, plot = FALSE)
+
+y_acf_values$acf
+
+```
+
+
+### PACF 
+
+```{r}
+
+# plot PACF of AR(1) series with phi = 0.5 
+acf(y.50, type = "partial")
+
+y_pacf_values <- acf(y.50, plot = FALSE, type = "partial")
+
+y_pacf_values$acf
+
+```
+
