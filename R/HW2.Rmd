@@ -1,6 +1,6 @@
 ---
 title: "Homework 2 R Problem"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,14 +12,14 @@ knitr::opts_chunk$set(echo = TRUE, fig.height = 4, fig.width = 6)
 
 set.seed(2)
 
-# a) AR(1) series with phi = 0.5 
-y.50 <-  arima.sim(model = list(ar = 0.5), n = 100)
-
 ```
 
-### ACF
+### a) ACF
 
 ```{r}
+
+# a) AR(1) series with phi = 0.5 
+y.50 <-  arima.sim(model = list(ar = 0.5), n = 100)
 
 # plot ACF of AR(1) series with phi = 0.5 
 acf(y.50)
@@ -30,6 +30,7 @@ y_acf_values$acf
 
 ```
 
+Comparing the ACF of phi = 0.5 with answer from Exercise 3.1, both have similar values.
 
 ### PACF 
 
@@ -43,4 +44,42 @@ y_pacf_values <- acf(y.50, plot = FALSE, type = "partial")
 y_pacf_values$acf
 
 ```
+
+The PACF with k > 2 are equal to 0 from Exercise 3.1. Here, it's slightly more or less than 0 when k > 2, which is still relatively similar to answer from Exercise 3.1.
+
+
+### b) ACF
+
+```{r}
+
+# a) AR(1) series with phi = 0.98 
+y.98 <-  arima.sim(model = list(ar = 0.98), n = 100)
+
+# plot ACF of AR(1) series with phi = 0.98 
+acf(y.98)
+
+y_acf_values <- acf(y.98, plot = FALSE)
+
+y_acf_values$acf
+
+```
+
+The ACF for phi = 0.8 in R decreases much faster than the ACF from Exercise 3.1. However, the values are not too far apart. 
+
+### PACF 
+
+```{r}
+
+# plot PACF of AR(1) series with phi = 0.98 
+acf(y.98, type = "partial")
+
+y_pacf_values <- acf(y.98, plot = FALSE, type = "partial")
+
+y_pacf_values$acf
+
+```
+
+Here, when k = 0, PCAF is not equal to 1. However, it's still very close to 1. When k = 1, the PACF is supposed to be closer to 1 from Exercise 3.1, but it's closer to 0. 
+
+
 
