@@ -53,7 +53,7 @@ The PACF with k > 2 are equal to 0 from Exercise 3.1. Here, it's slightly more o
 ```{r}
 
 # a) AR(1) series with phi = 0.98 
-y.98 <-  arima.sim(model = list(ar = 0.98), n = 100)
+y.98 <-  arima.sim(model = list(ar = -0.98), n = 100)
 
 # plot ACF of AR(1) series with phi = 0.98 
 acf(y.98)
@@ -64,7 +64,7 @@ y_acf_values$acf
 
 ```
 
-The ACF for phi = 0.8 in R decreases much faster than the ACF from Exercise 3.1. However, the values are not too far apart. 
+The ACF for phi = 0.98 in R, the values are also similar to Exercise 3.1.
 
 ### PACF 
 
@@ -79,7 +79,7 @@ y_pacf_values$acf
 
 ```
 
-Here, when k = 0, PCAF is not equal to 1. However, it's still very close to 1. When k = 1, the PACF is supposed to be closer to 1 from Exercise 3.1, but it's closer to 0. 
+The values in R here are also the same as PACF in Exercise 3.1b
 
 
 
