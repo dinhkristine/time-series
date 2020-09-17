@@ -125,7 +125,12 @@ abline(h=0,col='blue')
 title("Random Walk")
 
 
+set.seed(27)
 
+# AR(2)
+y <- arima.sim(model = list(ar = c(0.05, 0.23)), n = 100)
+
+names(y)
 
 
 
