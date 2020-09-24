@@ -133,6 +133,50 @@ y <- arima.sim(model = list(ar = c(0.05, 0.23)), n = 100)
 names(y)
 
 
+#### MA(1) ####
+
+## The model: Zt = at - θ1at-1 (Book)
+## The model: Zt = at + b1at-1 (R)
+## example 3 : Simulate and plot the ACF and PACF of the time series for θ1 = 0.5
+
+set.seed(13)
+
+# y <- arima.sim(model=list(ma = 0.5), n=100)
+y <- arima.sim(model=list(ma = -0.5), n=100)
+## The one with negative is right since R notation is + b1at-1 instead of - in the book
+## check theoratical values to compare
+ARMAacf(ma = c(-0.5), lag.max = 20, pacf = FALSE)
+ARMAacf(ma = c(-0.5), lag.max = 20, pacf = TRUE)
+
+## plot the ACF 
+par(mfrow=c(2,2))
+
+acf(y)
+
+acf(y, type="partial")
+
+
+## let try 1000 
+y <- arima.sim(model=list(ma = -0.5), n=1000)
+
+acf(y)
+
+acf(y, type="partial")
+
+
+
+#### MA(2) ####
+
+y <- arima.sim(model=list(ma = c(-0.65, -.24)), n=1000)
+ARMAacf(ma = c(-0.65, -.24), lag.max = 20, pacf = FALSE)
+ARMAacf(ma = c(-0.65, -.24), lag.max = 20, pacf = TRUE)
+
+acf(y, plot = F)
+
+acf(y, type="partial", plot = FALSE)
+
+
+
 
 
 
