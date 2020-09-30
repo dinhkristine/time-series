@@ -1,0 +1,50 @@
+---
+title: "Homework 4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+set.seed(4)
+
+```
+
+1) (c) Simulate a series of 100 observations from the above model
+
+```{r}
+
+y <- arima.sim(model=list(ma = -0.8), n = 100)
+
+acf(y, plot = FALSE)
+
+acf(y)
+
+acf(y, plot = FALSE, type="partial")
+
+acf(y, type="partial")
+
+
+```
+
+
+4) 
+
+```{r}
+
+y <- arima.sim(model=list(ma = c(-0.1, .21)), n = 500)
+
+acf(y, plot = FALSE)
+
+acf(y)
+
+acf(y, plot = FALSE, type="partial")
+
+acf(y, type="partial")
+
+
+```
