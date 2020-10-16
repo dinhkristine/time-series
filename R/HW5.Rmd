@@ -1,0 +1,32 @@
+---
+title: "Homework 5 question 4"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+# simulate model with phi = 0.6 and theta = 0.9
+set.seed(1)
+arma_sim <- arima.sim(model=list(ar=c(.5), ma = c(-.5)), n=100)
+
+acf(arma_sim, plot = FALSE)
+
+acf(arma_sim)
+
+ARMAacf(ar=c(0.5), ma = c(.5), lag.max = 20, pacf=T)
+
+acf(arma_sim, plot = FALSE, type="partial")
+
+acf(arma_sim, type="partial")
+
+ARMAacf(ar=c(0.6), ma = c(-.9), lag.max = 20, pacf = TRUE)
+
+
+
+```
+

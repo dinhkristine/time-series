@@ -1,7 +1,7 @@
 #Let's examine the sample size and noise in an AR(2) ACF
 
 set.seed(1)
-ar2_sim1 <- arima.sim(model=list(ar=c(1.3, -0.4)), n=100)
+ar2_sim1 <- arima.sim(model=list(ar=c(1.3, -0.4)), n=100 )
 
 set.seed(2)
 ar2_sim2 <- arima.sim(model=list(ar=c(1.3, -0.4)), n=1000)
