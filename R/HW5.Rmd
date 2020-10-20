@@ -18,7 +18,7 @@ acf(arma_sim, plot = FALSE)
 
 acf(arma_sim)
 
-ARMAacf(ar=c(0.5), ma = c(.5), lag.max = 20, pacf=T)
+ARMAacf(ar=c(1.2, -.8), ma = c(-.8), lag.max = 20, pacf=F)
 
 acf(arma_sim, plot = FALSE, type="partial")
 

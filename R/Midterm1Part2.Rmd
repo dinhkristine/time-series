@@ -1,0 +1,102 @@
+---
+title: "Midterm 1 Part II"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+
+```{r}
+
+library(tidyverse)
+library(kableExtra)
+library(knitr)
+library(gridExtra)
+
+```
+
+
+(e) In R, simulate a series of 500 observations from the ARMA(2,1) process with variance = 1.Be sure to use the set.seed function so that you can reproduce your results and use set.seed(6). For the simulated series,
+
+```{r echo = TRUE}
+
+set.seed(6)
+y <- arima.sim(model = list(ar = c(1.2, -0.8), ma = c(-0.8)), n = 500, sd = 1)
+
+```
+
+(i) Plot the series.
+
+```{r fig.height=4, fig.width=6}
+
+plot(y)
+
+```
+
+
+(ii) Plot the sample ACF and sample PACF
+
+```{r  fig.height=4, fig.width=10}
+
+par(mfrow = c(1,2))
+
+acf(y)
+
+acf(y, type = "partial")
+
+```
+
+(iii) Compare the sample ACF and PACF values for k = 0, 1, 2, 3 to the theoretical
+values from (a) and (c). For the comparison, you should make 2 tables with 3 columns
+that give: the theoretical values, the sample values, and the absolute value of the difference between the theoretical and the sample values. Feel free (not required) to add another column that you think would be informative.
+
+#### Table of Sample and Theoretical ACF
+
+```{r}
+
+sample_acf <- acf(y, plot = FALSE)[0:3]
+
+theoretical_acf <- ARMAacf(ar = c(1.2, -0.8), ma = c(-0.8), 
+                           lag.max = 3, pacf = F)
+
+sample_acf[[1]] %>% 
+  as.tibble() %>% 
+  cbind(as.matrix(theoretical_acf)) %>% 
+  mutate(Different = abs(`as.matrix(theoretical_acf)` - V1)) %>% 
+  round(3) %>% 
+  rownames_to_column() %>% 
+  mutate(rowname = as.numeric(rowname) - 1) %>% 
+  kable(col.names = c("k", "Sample ACF", "Theoretical ACF", "Different")) %>% 
+  kable_styling("bordered", full_width = FALSE)
+  
+```
+
+
+#### Table of Sample and Theoretical PACF
+
+```{r}
+
+sample_pacf <- acf(y, plot = FALSE, type = "partial")[1:3]
+
+theoretical_pacf <- ARMAacf(ar = c(1.2, -0.8), ma = c(-0.8), 
+                           lag.max = 3, pacf = TRUE)
+
+c(1, 1) %>% 
+  rbind(sample_pacf[[1]] %>% 
+  as.tibble() %>% 
+  cbind(as.matrix(theoretical_pacf))) %>% 
+  mutate(Different = abs(`as.matrix(theoretical_pacf)` - V1)) %>% 
+  round(3) %>% 
+  rownames_to_column() %>% 
+  mutate(rowname = as.numeric(rowname) - 1) %>% 
+  kable(col.names = c("k", "Sample PACF", "Theoretical PACF", "Different")) %>% 
+  kable_styling("bordered", full_width = FALSE)
+  
+```
+
+Theoretical and sample PACF and ACF for this model are similar. As k gets larger, the different between sample and theoretical ACF and PACF are getting larger. Smaller sample size also make the variability larger in the estimates as the lag increases. If we add more samples to the model, the sample ACF and PACF will be estimated closer to theoretical values.  
+
+
+
