@@ -1,0 +1,32 @@
+---
+title: "Homework 6: number 2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+2. Let’s consider the ARIMA(1,1,0) model with φ1 = 0.8. Use the R function arima to simulate a time series of length n = 500. Use the R set.seed(7) function. Make a time series plot of the data, sample ACF plot, and sample PACF. (See the example and Lab.) Make a time series plot of the differenced data, sample ACF plot, and sample PACF. (See the Lab.) From your plots of the data, what model would you fit to the data?
+
+
+```{r fig.height=7, fig.width=8}
+
+set.seed(7)
+
+y <- arima.sim(model=list(order=c(1,1,0), ar=c(0.8)), n=500)
+
+par(mfrow=c(3,2))
+
+plot(y)
+plot(diff(y))
+acf(y)
+acf(diff(y))
+acf(y, type = "partial")
+acf(diff(y), type = "partial")
+
+```
+
+From the plot of different series, PACF is cut off after lag 1 indicating an AR(1) model. The plot of different y seems like it's stationary. And sample ACF is exponential decay. I would fit it using an ARIMA(1,0,0)
+
