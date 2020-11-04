@@ -1,0 +1,168 @@
+---
+title: "Homework 7"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+```{r include=FALSE}
+
+
+```
+
+
+1) Data: Monthly AA Railroad Bond Yields (%×100), January 1968 through June 1976, n=102.
+
+The data are in a file and you can read the data into R and make the data a time series object by:
+
+```{r}
+
+byields <- scan("https://edoras.sdsu.edu/~babailey/stat673/bondyields.dat")
+
+byields <- ts(byields, start=1968, frequency = 12)
+
+```
+
+(a) What are AA Bond Yields?
+
+Bond yield typically are bond interest rates in the market. AA bond yields are typically safe and are known as investment grade which have a certain percentage of interest rate earning from the bond.  
+
+(b) Plot the series. Is the series stationary? Explain.
+
+```{r}
+
+plot(byields)
+
+```
+
+The series is not stationary since there is an overall increasing trend from 1968 to 1976. Especially, there is a steep positive slope from 1968 to 1971. And, from here the slope is decreasing until 1974 then increases again. 
+
+(c) Plot the difference series. Is the differenced series stationary? Explain.
+
+```{r}
+
+plot(diff(byields))
+
+```
+
+The differenced series look stationary. It seems like the means, overall, are similar accross time. 
+
+(d) From the sample ACF and PACF of the series and differenced series, what is an appropriate model?
+
+```{r}
+
+par(mfrow = c(2,2))
+acf(byields)
+acf(diff(byields))
+acf(byields, type = "partial")
+acf(diff(byields), type = "partial")
+
+```
+
+Since difference series is more stationary, we will use this series and know that d = 1. The ACF of the series is expoential decay and PACF looks like it's cutting off after lag 1. This indicate that this model could be an AR(1). With the d = 1 in place, we can say that this model is ARIMA(1,1,0)
+
+(e) Fit three possible models to the data. Use the R function arima.
+
+```{r}
+
+byields.fit1 <- arima(byields, order = c(1,1,0)) 
+byields.fit2 <- arima(byields, order = c(1,2,0)) 
+byields.fit3 <- arima(byields, order = c(1,1,1)) 
+
+```
+
+(f) Looking at the diagnostic plots, how well do the 3 models fit the data? Please include the diagnostic plots from the R function `tsdiag`.
+
+```{r fig.height=8, fig.width=4}
+
+byields.fit1
+tsdiag(byields.fit1)
+
+byields.fit2
+tsdiag(byields.fit2)
+
+byields.fit3
+tsdiag(byields.fit3)
+
+```
+
+The standardized residuals for all 3 models looks normal and random, no pattern. ACF plots for model 1 and 3 looks good. All ACF are within the range after lag 0. However, model 2 still has a spike at lag 2. P value plots look good for model 1 and 3, all correlations are high. Model 3 pvalue seems to have be higher than model 1. Model 2 has lowest p values near for most lags. 
+
+(g) Which of the models that you fit is the “best”? Explain.
+
+With all these reason being said, we will exlude model #2 for not passing the diagnostic test. Model 1 has lower AIC compared to model 2. So the "best" I'd pick is model 1. Lower AIC and ACF and PACF plots match with what an ARIMA(1,1,0) would have. 
+
+2) Data: Annual U.S. tobacco production, 1871-1984, in millions of pounds. (This is one of the 6.2 Empirical Examples!)
+
+The data are in a file and you can source the file that will create a time series object named UStobacco. Do not assign this to another object, just use the source command:
+
+```{r}
+
+source("https://edoras.sdsu.edu/~babailey/stat673/ustobacco.dat")
+
+```
+
+(a) Plot the series. Is the series stationary? Explain.
+
+```{r}
+
+plot(UStobacco)
+
+```
+
+The series is non-stationary since we can see an increasing trend overtime then decrease, on average, around 1960.
+
+(b) Plot the log-transformed series. Is the series stationary? Explain.
+
+```{r}
+
+plot(log(UStobacco))
+
+```
+
+Log transformed series is still non-stationary since we can see the overall mean is increasing over time. 
+
+(c) Plot the difference log-transformed series. Is the differenced log-transformed series stationary? Explain.
+
+```{r}
+
+plot(diff(log(UStobacco)))
+
+```
+
+The model looks more stationary now. However, there is a peak near the beginning of time. But overall, it looks more stationary. 
+
+(d) From the sample ACF and PACF of the differenced log-transformed series, what is an appropriate model?
+
+```{r}
+
+par(mfrow = c(1,2))
+acf(diff(log(UStobacco)))
+acf(diff(log(UStobacco)), type = "partial")
+
+```
+
+ACF looks like it's cutting off after lag 1 and PACF looks like an exponential decay suggesting an MA(1) model. Since we took the different of log transformed series, we have d is 1. So our model could possibly be ARIMA(0,1,1).
+
+(e) Fit the model suggested by (d). Use the R function arima.
+
+```{r}
+
+UStobacco.fit1 <- arima(log(UStobacco), order = c(0,1,1)) 
+
+```
+
+
+(f) Looking at the diagnostic plots, how well does your model fit the data? Please include the diagnostic plots from the R function `tsdiag`.
+
+```{r fig.height=8, fig.width=4}
+
+UStobacco.fit1
+tsdiag(UStobacco.fit1)
+
+```
+
+The studentized residual plots looks approximately normal. There is a small pattern of larger residuals in the beginning of time and smaller residuals on the later times. The ACF plots looks good without any spike over the lags after lag 0. P values plot looks high suggesting correlation. The fit of the model looks good with ma1 = -.6029 and AIC -80.2 which is really small.  
