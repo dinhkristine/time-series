@@ -1,0 +1,90 @@
+---
+title: "Homework 8"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+
+3) U.S. Unemployment Rate Data: The U.S. unemployment rate series can be found in the file in ur.dat off the class web page at https://edoras.sdsu.edu/~babailey/stat673/ur.dat. 
+
+```{r}
+
+# To read this file into an R dataset and make it an R time series object use the R commands:
+
+ur <- scan("https://edoras.sdsu.edu/~babailey/stat673/ur.dat")
+ur <- ts(ur, start=1948, frequency=4)
+
+```
+
+
+(a) Plot the time series, sample ACF and sample PACF.
+
+```{r fig.height=3, fig.width=8}
+
+par(mfrow=c(1,3))
+
+plot(ur)
+acf(ur)
+acf(ur, type = "partial")
+
+```
+
+(b) Is an AR(2) model appropriate for the data? Explain. 
+
+Since ACF is exponential decaying and PACF is cutoff after lag two, AR(2) can be an appropriate model the data. However, the time series is non-stationary. It seems like the unemployment rate is increasing over time.   
+
+
+(c) Fit an AR(2) model to the data using the R function `arima`.
+
+```{r echo = TRUE}
+
+ur.fit1 <- arima(ur, order = c(2,0,0)) 
+
+ur.fit1
+
+```
+
+
+(d) Make diagnostics plots using the R function tsdiag. How well does the model fit the data?
+
+```{r fig.height=6, fig.width=5}
+
+tsdiag(ur.fit1)
+
+```
+
+The standard residuals looks like there is some pattern with bigger residuals at some years and smaller at other years. ACF of residuals looks like white noise which is good. P-values plot looks decent at lag 2 to 6 then nearly 0 after lag 6 suggesting the model is not fitting quite well. 
+
+(e) Use the first 115 data points to fit an AR(2) model. Forecast the next 6 observations and construct the 95% forecast limits. Include the plot. Compare your forecasts with the observations and quantify the difference.
+
+```{r}
+
+# split the training set 
+ur1 <- ts(ur[1:115])
+
+# fit the first 115 observation points 
+ur.fit2 <- arima(ur1, order=c(2,0,0))
+
+# and compute forecasts for the next 6 observation 
+pred <- predict(ur.fit2, n.ahead = 6)
+
+# graph the forecast with actual points 
+plot(c(ur1, pred$pred), ylim=c(0,13), xlim = c(0, 130), type="n", ylab = "U.S. Unemployment Rate")
+lines(1:115, ur1, lty=1)
+lines(116:121, pred$pred + 2*pred$se, lty=2, col = "red")
+lines(116:121, pred$pred - 2*pred$se, lty=2, col = "red")
+points(116:121, pred$pred, pch = 3, col = "blue")
+points(116:121, ur[116:121], pch=1, col = "green") 
+title("95% Forecast intervals")
+
+legend("topleft", c("Forecases", "Actual UR", "95% Forecast CI"), 
+       pch = c(3, 1, NA), lty = c(NA, NA, 2), col = c("blue", "green", "red"))
+
+```
+
+The forecasts and actual unemployment rate for these 6 observations are very close. This means that the model is predicting these test points pretty well. Since the time series is non-stationary, the 95% confident interval will be wider as we're making more predictions.  
+
+
