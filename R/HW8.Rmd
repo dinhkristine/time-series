@@ -88,3 +88,14 @@ legend("topleft", c("Forecases", "Actual UR", "95% Forecast CI"),
 The forecasts and actual unemployment rate for these 6 observations are very close. This means that the model is predicting these test points pretty well. Since the time series is non-stationary, the 95% confident interval will be wider as we're making more predictions.  
 
 
+```{r}
+
+a <- data.frame(Forecast = round(pred$pred, 2), "Actual UR" = ur[116:121])
+
+a$Delta <- a$Forecast - a$Actual.UR
+
+a
+
+```
+
+
