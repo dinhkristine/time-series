@@ -1,0 +1,144 @@
+---
+title: "Homework 9"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+2. Johnson & Johnson Earnings: The quarterly earnings per share for 1960-1980 of
+the U.S. company Johnson & Johnson.
+
+```{r}
+
+jj <- scan("https://edoras.sdsu.edu/~babailey/stat673/JJ.dat", skip = 1)
+
+jj <- ts(jj, start=1960, frequency=4)
+
+```
+
+(a) Plot the time series and also the logarithm of the series. Argue that we should transform by logs to model this series.
+
+```{r fig.height=4}
+
+par(mfrow=c(1,2))
+plot(jj)
+plot(log(jj))
+
+```
+
+We should transform series `jj` using log-transformation to have smaller changes between times. On the left plot, the changes from a lag to another lag have bigger change. On the plot on the right side, the changes are smaller; and the scale is smaller which is easier to work with. 
+
+
+(b) The series is clearly not stationary. Display 3 plots: 1) the first differences, 2) seasonal differences 3) and the seasonal differences with the first differences. Recall that for quarterly data, a season is of length 4. Does the third plot stationarity now seem reasonable?
+
+```{r fig.height=3, fig.width=8}
+
+par(mfrow=c(1,3))
+plot(diff(log(jj)))
+plot(diff(log(jj), lag = 4))
+plot(diff(diff(log(jj), lag = 4)))
+
+```
+
+After taking the seasonal differences with the first differences of series `jj`, the process seems more stationary now (see the third plot on the right).
+
+
+(c) Plot and interpret the sample ACF of seasonal differences with the first differences. (Hint: This is part (b) 3))
+
+```{r fig.height=3, fig.width=4}
+
+acf(diff(diff(log(jj), lag = 4)))
+
+```
+
+
+(d) Fit the model ARIMA(0,1,1)×(0,1,1)4, and assess the significance of the estimated coefficients.
+
+```{r}
+
+fit1 <- arima(log(jj), order=c(0,1,1), seasonal=list(order=c(0,1,1)))
+
+fit1
+
+confint(fit1)
+
+```
+
+The confident interval for `fit1` for coefficient `ma1` and `sma1` don't contain 0 in the intervals. This indicate that the estimated coefficients are signficant. 
+
+
+(e) Make diagnostics plots using the R function tsdiag. In addition, include a normal Q-Q plot of the residuals. How well does the model fit the data?
+
+```{r fig.height=6, fig.width=4}
+
+tsdiag(fit1)
+
+```
+
+The residuals seem to be random and doesn't seem to have any pattern. The ACF plot looks like white noise with one one peak at lag 0 and no peaks at other lag which is good. p-value plot seems to be high. There are no low p-values near 0 which is good.  
+
+
+```{r fig.height=3, fig.width=4}
+
+qqnorm(fit1$residuals)
+qqline(fit1$residuals, col = "red")
+
+```
+
+QQ plot of residuals looks normal since it's on the red line. Therefore, this model is fit the data quite well. 
+
+
+(f) Forecasts for the next two years of the series. Be sure to include forecast limits. Include the plot.
+
+Here are the quarterly predictions of the two years ahead:  
+
+```{r }
+
+pred1 <- predict(fit1, n.ahead=8)
+
+exp(pred1$pred)
+
+```
+
+
+Upper 95% prediction intervals of the quartlerly predictions of the two years ahead:
+
+```{r}
+exp(pred1$pred + 2*pred1$se)
+```
+
+
+Lower 95% prediction intervals of the quartlerly predictions of the two years ahead:
+
+```{r}
+exp(pred1$pred - 2*pred1$se)
+```
+
+
+Plot of the forcases and log forecasts: 
+
+```{r fig.height=7, fig.width=6}
+
+par(mfrow=c(2,1),lwd=2)
+plot(c(log(jj), pred1$pred), type="n", ylim=c(-1,3.5), xlim = c(0, 95))
+lines(1:84, log(jj), lty=1)
+lines(85:92, pred1$pred + 2*pred1$se, lty=2, col = "red")
+lines(85:92, pred1$pred - 2*pred1$se, lty=2, col = "red")
+lines(85:92, pred1$pred, lty=1, col = "blue")
+title("Forecasts")
+legend("topleft", c("Forecast", "Actual JJ", "95% Forecast CI"), 
+       lty = c(1, 1, 2), col = c("blue", "black", "red"))
+
+plot(c(jj, exp(pred1$pred)), type="n", ylim=c(0,30), xlim = c(0, 95))
+lines(1:84, jj, lty=1)
+lines(85:92, exp(pred1$pred + 2*pred1$se), lty=2, col = "red")
+lines(85:92, exp(pred1$pred - 2*pred1$se), lty=2, col = "red")
+lines(85:92, exp(pred1$pred), lty=1, col = "blue")
+title("Log Forecasts")
+legend("topleft", c("Forecast", "Actual JJ", "95% Forecast CI"), 
+       lty = c(1, 1, 2), col = c("blue", "black", "red"))
+
+```
+
