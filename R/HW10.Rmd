@@ -1,0 +1,63 @@
+---
+title: "Homework 10: R Problems"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. p. 287, Problem 12.5
+
+It says to find and discuss the shape of the spectra. You should calculate each of the spectrum by hand. For discussing the shape, you should make a plot of the spectrum in R. You can follow the example in the R Lab: The Spectrum linked off the course calendar.
+
+```{r fig.height=3, fig.width=8}
+
+par(mfrow = c(1,3))
+
+w <- seq(-pi,pi,length=100)
+f1 <- 1/(2*pi*(1.32-1.2*cos(w)))
+f2 <- 1/(2*pi*(1.9801-1.98*cos(w)))
+f3 <- 1/(2*pi*(1.36+1.2*cos(w)))
+
+plot(w, f1, main = "a) phi = .6")
+plot(w, f2, main = "b) phi = .99")
+plot(w, f3, main = "c) phi = -.6")
+
+```
+
+a) This series is has low frequency compenents that have a lot of power concentrated at low frequencies of the spectrum and have positive autocorrelation.
+
+b) This series is has low frequency compenents that have a lot of power concentrated at low frequencies of the spectrum and have positive autocorrelation. Since phi (.99) is higher than phi (.6) in (a), the number of conponent that are high are less than (a).
+
+c) This series is has high frequency compenents that have a lot of power concentrated at high frequencies of the spectrum and have negative autocorrelation. Since phi = -.6 is opposite with (a) phi = .6, the frequency have opposite domination points. 
+
+
+2. p. 287, Problem 12.6 (a) and (b)
+
+It says to find and discuss the shape of the spectra. You should calculate each of the spectrum by hand. For discussing the shape, you should make a plot of the spectrum in R. You can follow the example in the R Lab: The Spectrum linked off the course calendar.
+
+
+```{r fig.height=3, fig.width=8}
+
+par(mfrow = c(1,2))
+
+f4 <- 1/(2*pi*(1.5044-1.568*cos(w) + .24*cos(w)))
+f5 <- 1/(2*pi*(1.5224-1.148*cos(w) - .36*cos(w)))
+
+plot(w, f4, main = "a) phi_1 = .7 & phi_2 = -.12")
+plot(w, f5, main = "b) theta_1 = .7 & theta_2 = .18")
+
+```
+
+a) This series is has low frequency compenents that have a lot of power concentrated at low frequencies of the spectrum and have negative autocorrelation.
+
+b) This series is has low frequency compenents that have a lot of power concentrated at low frequencies of the spectrum and have positive autocorrelation. This time series seems to have more lower points than series (a).
+
+
+
+
+
+
+
+
